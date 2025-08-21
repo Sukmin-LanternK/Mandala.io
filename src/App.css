@@ -1,0 +1,135 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+
+
+.main-content {
+  display: flex;
+  flex-grow: 1;
+}
+
+.sidebar {
+  width: 280px;
+  padding: 2rem;
+  border-right: 1px solid #dee2e6;
+  background-color: #fff;
+}
+
+.theme-selector, .export-section, .instructions {
+  margin-bottom: 2rem;
+}
+
+.theme-selector h3, .export-section h3, .instructions h3 {
+  margin-top: 0;
+}
+
+.theme-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.theme-button {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: transparent;
+  text-align: left;
+}
+
+.theme-button.active {
+  border-color: #007bff;
+  background-color: #e7f3ff;
+}
+
+.theme-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.export-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.instructions ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.instructions li {
+  margin-bottom: 0.5rem;
+}
+
+.grid-container {
+  flex-grow: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.interactive-grid {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(3, auto);
+  border: 2px solid #adb5bd;
+}
+
+.major-cell {
+  display: grid;
+  grid-template-columns: repeat(3, 72px);
+  grid-template-rows: repeat(3, 72px);
+  border: 2px solid #adb5bd;
+}
+
+.minor-cell {
+  border: 1px solid #ced4da;
+  background-color: transparent;
+  width: 72px;
+  height: 72px;
+  padding: 3px;
+  text-align: center;
+  font-family: inherit;
+  font-size: 12px;
+  resize: none;
+  box-sizing: border-box;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.minor-cell.core-goal {
+  background-color: #e9ecef;
+  font-weight: bold;
+}
+
+.grid-footer {
+  margin-top: 1rem;
+  color: #6c757d;
+}
+
+.minor-cell.core-goal::placeholder {
+  color: #f8f9fa;
+}
