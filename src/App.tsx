@@ -45,11 +45,58 @@ const App: React.FC = () => {
 
   const handleExport = () => {
     if (gridRef.current) {
-      html2canvas(gridRef.current).then(canvas => {
+      html2canvas(gridRef.current, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: null,
+        onclone: (clonedDoc: Document) => {
+          const clonedGrid = clonedDoc.querySelector('.interactive-grid');
+          if (clonedGrid) {
+            const textareas = clonedGrid.querySelectorAll('textarea');
+            textareas.forEach((textarea: HTMLTextAreaElement) => {
+              const div = clonedDoc.createElement('div');
+              const computedStyle = window.getComputedStyle(textarea);
+
+              div.className = textarea.className;
+              div.innerText = textarea.value;
+
+              // Copy essential styles explicitly
+              div.style.width = computedStyle.width;
+              div.style.height = computedStyle.height;
+              div.style.padding = computedStyle.padding;
+              div.style.border = computedStyle.border;
+              div.style.fontFamily = computedStyle.fontFamily;
+              div.style.fontSize = computedStyle.fontSize;
+              div.style.fontWeight = computedStyle.fontWeight; // Fix: Added fontWeight
+              div.style.color = computedStyle.color;
+              div.style.textAlign = computedStyle.textAlign;
+              div.style.boxSizing = computedStyle.boxSizing;
+
+              // Crucial styles for text wrapping and alignment
+              div.style.whiteSpace = 'pre-wrap';
+              div.style.wordWrap = 'break-word';
+              div.style.display = 'flex';
+              div.style.justifyContent = 'center';
+              div.style.alignItems = 'center';
+
+              // Handle background color: use inline style if it exists, otherwise default to white
+              if (textarea.style.backgroundColor) {
+                div.style.backgroundColor = textarea.style.backgroundColor;
+              } else {
+                div.style.backgroundColor = '#ffffff';
+              }
+
+              textarea.parentNode?.replaceChild(div, textarea);
+            });
+          }
+        }
+      }).then(canvas => {
         const link = document.createElement('a');
-        link.download = 'mandala-chart.jpg';
-        link.href = canvas.toDataURL('image/jpeg');
+        link.download = 'mandala-chart.png';
+        link.href = canvas.toDataURL('image/png');
         link.click();
+      }).catch(err => {
+        console.error('Export failed:', err);
       });
     }
   };
@@ -80,6 +127,7 @@ const App: React.FC = () => {
           onChange={(e) => handleCellChange(i, e.target.value)}
           placeholder={isCoreGoal ? 'Core Goal' : ''}
           style={style}
+          aria-label={`Grid Cell ${i + 1}`}
         />
       );
     }
